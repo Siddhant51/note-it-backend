@@ -20,12 +20,12 @@ router.post("/login", Login);
 
 router.post("/create", requireAuth, Create);
 
-router.get("/notes", Notes);
+router.get("/notes", requireAuth, Notes);
 
-router.get("/note/:noteId", getNote);
+router.get("/note/:noteId", requireAuth, getNote);
 
-router.put("/note/update/:noteId", Update);
+router.put("/note/update/:noteId", requireAuth, Update);
 
-router.delete("/note/delete/:noteId", Delete);
+router.delete("/note/delete/:noteId", requireAuth, Delete);
 
 module.exports = router;

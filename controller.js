@@ -90,10 +90,12 @@ const Notes = async (req, res) => {
   try {
     // Get the user's ID from the decoded token
     const userId = req.user.id;
+    console.log("User ID: ", userId);
 
-    const notes = await Note.find({ userId })
-      .sort({ updatedAt: -1, createdAt: -1 }) // Sort by updatedAt in descending order, then by createdAt in descending order
-      .exec();
+    const notes = await Note.find({ userId }).sort({
+      updatedAt: -1,
+      createdAt: -1,
+    }); // Sort by updatedAt in descending order, then by createdAt in descending order
 
     res.status(200).json(notes);
   } catch (error) {

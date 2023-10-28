@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { User } = require("./schema");
 
-const requireAuth = (req, res, next) => {
+const requireAuth = async (req, res, next) => {
   const token = req.header("Authorization");
 
   if (!token) {
@@ -13,15 +13,14 @@ const requireAuth = (req, res, next) => {
     const secretKey = "mysecretkey"; // Replace with your secret key
     const decoded = jwt.verify(token, secretKey);
 
-    console.log("2");
+    console.log(decoded);
     // The user data is limited to what's in the token
     const userId = decoded.userId;
 
     // Here, you can make a database query to fetch the complete user data using the userId
-    User.findById(userId, (err, user) => {
-      if (err || !user) {
-        return res.status(401).json({ error: "User not found" });
-      }
+    try {
+      const user = await User.findById(userId);
+      console.log("User found", user);
 
       // Now you have access to the complete user data
       const userData = {
@@ -33,11 +32,13 @@ const requireAuth = (req, res, next) => {
 
       // Attach the user data to the request for further processing in your route
       req.user = userData;
-
-      next();
-    });
+    } catch (error) {
+      return res.status(401).json({ error: "Error while fetching data" });
+    }
+    console.log("authenticated");
+    next();
   } catch (err) {
-    return res.status(401).json({ error: "Invalid token" });
+    return res.status(401).json({ error: err });
   }
 };
 
