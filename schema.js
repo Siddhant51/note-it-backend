@@ -13,7 +13,7 @@ const noteSchema = new mongoose.Schema({
   title: String,
   content: String,
   color: String,
-  font: String,
+  type: String,
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

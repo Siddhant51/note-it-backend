@@ -66,13 +66,13 @@ const Login = async (req, res) => {
 const Create = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { title, content, color, font } = req.body;
+    const { title, content, color, type } = req.body;
 
     const note = new Note({
       title,
       content,
       color,
-      font,
+      type,
       userId,
     });
 
@@ -129,7 +129,7 @@ const Update = async (req, res) => {
     const noteId = req.params.noteId;
 
     // Extract the updated note data from the request body
-    const { title, content, color, font } = req.body;
+    const { title, content, color, type } = req.body;
 
     const note = await Note.findById(noteId);
 
@@ -141,7 +141,7 @@ const Update = async (req, res) => {
     note.title = title || note.title;
     note.content = content || note.content;
     note.color = color || note.color;
-    note.font = font || note.font;
+    note.type = type || note.type;
 
     await note.save();
 
