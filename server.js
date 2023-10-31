@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(cors());
 app.use(require("./routes"));
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 mongoose.connect(
   "mongodb+srv://Siddhant:Siddhant@cluster0.s36geb7.mongodb.net/NoteIt",

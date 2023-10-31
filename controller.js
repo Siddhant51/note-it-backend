@@ -4,18 +4,19 @@ const bcrypt = require("bcrypt");
 
 // User Registration
 const Register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, theme } = req.body;
 
   if (!username || !email || !password) {
     return res.status(400).json({ error: "Please fill in all fields" });
   }
+  // console.log("i was here");
 
   try {
     const userExist = await User.findOne({ email: email });
     if (userExist) {
       return res.status(400).json({ error: "User already exists" });
     } else {
-      const user = new User({ username, email, password });
+      const user = new User({ username, email, password, theme });
 
       // The password hashing will be handled by the pre-save middleware defined in the schema
 
@@ -56,6 +57,7 @@ const Login = async (req, res) => {
     });
 
     res.status(200).json({ message: "Login successful", token: token });
+    // res.send({ user: user });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
@@ -92,10 +94,7 @@ const Notes = async (req, res) => {
     const userId = req.user.id;
     console.log("User ID: ", userId);
 
-    const notes = await Note.find({ userId }).sort({
-      updatedAt: -1,
-      createdAt: -1,
-    }); // Sort by updatedAt in descending order, then by createdAt in descending order
+    const notes = await Note.find({ userId }).sort({ updatedAt: -1 });
 
     res.status(200).json(notes);
   } catch (error) {
