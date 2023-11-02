@@ -24,8 +24,8 @@ router.get("/notes", requireAuth, Notes);
 
 router.get("/note/:noteId", requireAuth, getNote);
 
-router.put("/note/update/:noteId", requireAuth, Update);
+router.put("/update/:noteId", requireAuth, Update);
 
-router.delete("/note/delete/:noteId", requireAuth, Delete);
+router.delete("/delete/:noteId", requireAuth, Delete);
 
 module.exports = router;
