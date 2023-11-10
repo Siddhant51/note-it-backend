@@ -7,7 +7,8 @@ const {
   Notes,
   Update,
   Delete,
-  getNote,
+  GetNote,
+  NoteCount,
 } = require("./controller");
 const { requireAuth } = require("./authenticate");
 const router = express.Router();
@@ -22,7 +23,9 @@ router.post("/create", requireAuth, Create);
 
 router.get("/notes", requireAuth, Notes);
 
-router.get("/note/:noteId", requireAuth, getNote);
+router.get("/note-count", requireAuth, NoteCount);
+
+router.get("/note/:noteId", requireAuth, GetNote);
 
 router.put("/update/:noteId", requireAuth, Update);
 

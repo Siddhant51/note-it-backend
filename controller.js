@@ -103,10 +103,10 @@ const Notes = async (req, res) => {
 };
 
 // Retrieve Note
-const getNote = async (req, res) => {
+const GetNote = async (req, res) => {
   try {
     // Extract the noteId from the URL parameter
-    const noteId = req.params.noteId;
+    const { noteId } = req.params;
 
     const note = await Note.findById(noteId);
 
@@ -117,6 +117,19 @@ const getNote = async (req, res) => {
     res.status(200).json(note);
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+// Fetch distinct note types and their counts
+const NoteCount = async (req, res) => {
+  try {
+    const noteTypes = await Note.aggregate([
+      { $group: { _id: "$type", count: { $sum: 1 } } },
+    ]);
+    res.json(noteTypes);
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -174,7 +187,8 @@ module.exports = {
   Login,
   Create,
   Notes,
-  getNote,
+  GetNote,
   Update,
   Delete,
+  NoteCount,
 };
