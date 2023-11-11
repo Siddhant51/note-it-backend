@@ -126,6 +126,7 @@ const NoteCount = async (req, res) => {
   try {
     const noteTypes = await Note.aggregate([
       { $group: { _id: "$type", count: { $sum: 1 } } },
+      { $sort: { _id: 1 } }, // Sort in ascending order by _id
     ]);
     res.json(noteTypes);
   } catch (err) {
