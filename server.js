@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 
@@ -10,13 +11,10 @@ app.use(require("./routes"));
 
 const port = process.env.PORT || 3001;
 
-mongoose.connect(
-  "mongodb+srv://Siddhant:Siddhant@cluster0.s36geb7.mongodb.net/NoteIt",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect(process.env.DB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
