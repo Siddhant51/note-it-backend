@@ -8,6 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(require("./routes"));
+require("dotenv").config();
 
 const port = process.env.PORT || 3001;
 
