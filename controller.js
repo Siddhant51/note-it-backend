@@ -123,11 +123,15 @@ const GetNote = async (req, res) => {
 
 // Fetch distinct note types and their counts
 const NoteCount = async (req, res) => {
+  const userId = req.user.id; // Assuming you can retrieve the user ID from the request
+
   try {
     const noteTypes = await Note.aggregate([
+      { $match: { userId } }, // Match notes for the specific user
       { $group: { _id: "$type", count: { $sum: 1 } } },
       { $sort: { _id: 1 } }, // Sort in ascending order by _id
     ]);
+
     res.json(noteTypes);
   } catch (err) {
     console.error(err);
