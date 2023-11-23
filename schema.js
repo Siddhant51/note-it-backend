@@ -9,14 +9,17 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-const noteSchema = new mongoose.Schema({
-  title: String,
-  content: String,
-  type: String,
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-});
+const noteSchema = new mongoose.Schema(
+  {
+    title: String,
+    content: String,
+    type: String,
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 // Pre-save middleware to hash the password
 userSchema.pre("save", async function (next) {
